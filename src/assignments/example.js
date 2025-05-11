@@ -57,14 +57,10 @@ const DeleteButton = styled.button`
 
 function Todo() {
   const [toDo, setToDo] = useState("");
-  const [toDos, setToDos] = useState([]);
-
-  useEffect(() => {
+  const [toDos, setToDos] = useState(() => {
     const saved = localStorage.getItem("todos");
-    if (saved) {
-      setToDos(JSON.parse(saved));
-    }
-  }, []);
+    return saved ? JSON.parse(saved) : [];
+  });
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(toDos));
