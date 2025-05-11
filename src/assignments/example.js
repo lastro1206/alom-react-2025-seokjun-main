@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -58,6 +58,17 @@ const DeleteButton = styled.button`
 function Todo() {
   const [toDo, setToDo] = useState("");
   const [toDos, setToDos] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("todos");
+    if (saved) {
+      setToDos(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(toDos));
+  }, [toDos]);
 
   const onChange = (event) => setToDo(event.target.value);
 
